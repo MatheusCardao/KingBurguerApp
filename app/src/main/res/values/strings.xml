@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">KingBurguer</string>
+    <string name="email">E-mail</string>
+    <string name="hint_email">Digite o seu e-mail</string>
+    <string name="password">Senha</string>
+    <string name="hint_password">Digite sua senha</string>
+    <string name="send">Enviar</string>
+    <string name="show_password">Mostrar senha</string>
+    <string name="hide_password">Esconder senha</string>
+    <string name="login">Login</string>
+    <string name="remember_me">Lembrar-me</string>
+    <string name="have_account">Não tem uma conta?</string>
+    <string name="sign_up">Cadastrar</string>
+    <string name="hamburguer">Hamburguer</string>
+    <string name="alert_icon">Icone do alerta</string>
+    <string name="signup">Cadastro</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="hint_confirm_password">Digite novamente a sua senha</string>
+    <string name="document">CPF</string>
+    <string name="hint_document">Digite seu CPF</string>
+    <string name="birthdate">Data de Nascimento</string>
+    <string name="hint_birthdate">Digite sua data de nascimento</string>
+    <string name="name">Nome</string>
+    <string name="hint_name">Digite seu nome</string>
+    <string name="back">Voltar</string>
+</resources>
