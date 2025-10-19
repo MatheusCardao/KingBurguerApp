@@ -131,7 +131,8 @@ fun LoginScreen(
                 }
                 KingButton(
                     text = stringResource(id = R.string.send),
-                    enabled = true
+                    enabled = true,
+                    loading = uiState.isLoading
                 ) {
                     loginViewModel.send()
                 }
