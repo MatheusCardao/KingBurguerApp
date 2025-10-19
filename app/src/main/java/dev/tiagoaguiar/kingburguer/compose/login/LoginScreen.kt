@@ -20,6 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,6 +46,7 @@ import dev.tiagoaguiar.kingburguer.viewmodels.LoginViewModel
 @Composable
 fun LoginScreen(
     onSingUpClick: () -> Unit,
+    onNavigationToHome: () -> Unit,
     loginViewModel: LoginViewModel = viewModel()
 ) {
     Surface(
@@ -63,6 +65,13 @@ fun LoginScreen(
                     .padding(horizontal = 20.dp)
                     .verticalScroll(scrollState)
             ) {
+
+                LaunchedEffect(key1 = uiState.goToHome) {
+                    if(uiState.goToHome) {
+                        onNavigationToHome()
+                        loginViewModel.reset()
+                    }
+                }
 
                 uiState.error?.let {
                     KingAlert(
@@ -151,7 +160,7 @@ fun LoginScreen(
 @Preview(showBackground = true)
 fun LightLoginScreenPreview() {
     KingBurguerTheme(dynamicColor = false, darkTheme = false) {
-        LoginScreen(onSingUpClick = {})
+        LoginScreen(onSingUpClick = {}, onNavigationToHome = {})
     }
 }
 
@@ -159,6 +168,6 @@ fun LightLoginScreenPreview() {
 @Preview(showBackground = true)
 fun DarkLoginScreenPreview() {
     KingBurguerTheme(dynamicColor = false, darkTheme = true) {
-        LoginScreen(onSingUpClick = {})
+        LoginScreen(onSingUpClick = {}, onNavigationToHome = {})
     }
 }

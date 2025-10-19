@@ -26,6 +26,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,7 +53,8 @@ import dev.tiagoaguiar.kingburguer.viewmodels.SignUpViewModel
 @Composable
 fun SignUpScreen(
     signUpViewModel: SignUpViewModel = viewModel(),
-    onNavigationClick: () -> Unit
+    onNavigationClick: () -> Unit,
+    onNavigationToHome: () -> Unit
 ) {
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -76,6 +78,7 @@ fun SignUpScreen(
         ) { contentPadding ->
             SignUpContentScreen(
                 signUpViewModel = signUpViewModel,
+                onNavigationToHome = onNavigationToHome,
                 modifier = Modifier
                 .padding(top = contentPadding.calculateTopPadding())
             )
@@ -86,6 +89,7 @@ fun SignUpScreen(
 @Composable
 private fun SignUpContentScreen(
     signUpViewModel: SignUpViewModel,
+    onNavigationToHome: () -> Unit,
     modifier: Modifier,
 ) {
     Surface(
@@ -106,6 +110,13 @@ private fun SignUpContentScreen(
                 verticalArrangement = Arrangement.spacedBy(14.dp, Alignment.Top),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
+                LaunchedEffect(key1 = uiState.goToHome) {
+                    if(uiState.goToHome) {
+                        onNavigationToHome()
+                        signUpViewModel.reset()
+                    }
+                }
 
                 uiState.error?.let {
                     KingAlert(
@@ -220,7 +231,7 @@ private fun SignUpContentScreen(
 @Preview(showBackground = true)
 fun LightSignUpScreenPreview() {
     KingBurguerTheme(dynamicColor = false, darkTheme = false) {
-        SignUpScreen {}
+        SignUpScreen(onNavigationClick = {}, onNavigationToHome = {})
     }
 }
 
@@ -228,6 +239,6 @@ fun LightSignUpScreenPreview() {
 @Preview(showBackground = true)
 fun DarkSignUpScreenPreview() {
     KingBurguerTheme(dynamicColor = false, darkTheme = true) {
-        SignUpScreen {}
+        SignUpScreen(onNavigationClick = {}, onNavigationToHome = {})
     }
 }
