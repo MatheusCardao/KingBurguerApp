@@ -133,7 +133,7 @@ private fun SignUpContentScreen(
                 KingTextTitle(text = stringResource(id = R.string.signup))
 
                 KingTextField(
-                    value = signUpViewModel.email,
+                    value = "",
                     label = R.string.email,
                     placeholder = R.string.hint_email,
                     keyboardType = KeyboardType.Email,
@@ -142,16 +142,17 @@ private fun SignUpContentScreen(
 
                 }
                 KingTextField(
-                    value = signUpViewModel.name,
+                    value = signUpViewModel.formState.name.field,
                     label = R.string.name,
                     placeholder = R.string.hint_name,
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done,
+                    error = signUpViewModel.formState.name.error
                 ) {
-
+                    signUpViewModel.updateName(it)
                 }
                 KingTextField(
-                    value = signUpViewModel.password,
+                    value = "",
                     label = R.string.password,
                     placeholder = R.string.hint_password,
                     keyboardType = KeyboardType.Password,
@@ -172,7 +173,7 @@ private fun SignUpContentScreen(
 
                 }
                 KingTextField(
-                    value = signUpViewModel.confirmPassword,
+                    value = "",
                     label = R.string.confirm_password,
                     placeholder = R.string.hint_confirm_password,
                     keyboardType = KeyboardType.Password,
@@ -193,7 +194,7 @@ private fun SignUpContentScreen(
 
                 }
                 KingTextField(
-                    value = signUpViewModel.document,
+                    value = "",
                     label = R.string.document,
                     placeholder = R.string.hint_document,
                     keyboardType = KeyboardType.Number,
@@ -202,7 +203,7 @@ private fun SignUpContentScreen(
 
                 }
                 KingTextField(
-                    value = signUpViewModel.birthdate,
+                    value = "",
                     label = R.string.birthdate,
                     placeholder = R.string.hint_birthdate,
                     keyboardType = KeyboardType.Number,

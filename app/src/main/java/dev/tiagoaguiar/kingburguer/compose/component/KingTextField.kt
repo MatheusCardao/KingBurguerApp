@@ -27,6 +27,7 @@ fun KingTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Next,
     ofuscate: Boolean = false,
+    error: String? = null,
     modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit)? = null,
     onValueChange: (String) -> Unit
@@ -41,6 +42,12 @@ fun KingTextField(
         },
         placeholder = {
             Text(text = stringResource(id = placeholder))
+        },
+        isError = error != null,
+        supportingText = {
+            error?.let { msg ->
+                Text(msg)
+            }
         },
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardType,
