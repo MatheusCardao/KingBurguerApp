@@ -7,4 +7,6 @@ data class FieldState(
 )
 data class FormState(
     val name: FieldState = FieldState(),
+    val password: FieldState = FieldState(),
+    val confirmPassword: FieldState = FieldState()
 )

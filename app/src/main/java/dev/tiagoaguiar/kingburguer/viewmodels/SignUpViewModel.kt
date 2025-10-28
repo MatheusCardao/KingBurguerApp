@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.tiagoaguiar.kingburguer.compose.login.LoginUiState
 import dev.tiagoaguiar.kingburguer.compose.signup.FieldState
 import dev.tiagoaguiar.kingburguer.compose.signup.FormState
 import dev.tiagoaguiar.kingburguer.compose.signup.SignUpUiState
@@ -42,9 +41,48 @@ class SignUpViewModel: ViewModel() {
             return
         }
 
-        //sucesso
         formState = formState.copy(
             name = FieldState(field = newName, error = null)
+        )
+    }
+
+    fun updatePassword(newPassword: String) {
+        if(newPassword.isBlank()) {
+            formState = formState.copy(
+                password = FieldState(field = newPassword, error = "Campo senha não pode ser vazio")
+            )
+            return
+        }
+
+        if(newPassword.length < 8) {
+            formState = formState.copy(
+                password = FieldState(field = newPassword, error = "Senha deve ter 8 caracteres ou mais")
+            )
+            return
+        }
+
+        formState = formState.copy(
+            password = FieldState(field = newPassword, error = null)
+        )
+    }
+
+    fun updatePasswordConfirm(confirmPassword: String) {
+        if(confirmPassword.isBlank()) {
+            formState = formState.copy(
+                confirmPassword = FieldState(field = confirmPassword, error = "Campo senha não pode ser vazio")
+            )
+            return
+        }
+
+        if(confirmPassword != formState.password.field) {
+            formState = formState.copy(
+                confirmPassword = FieldState(field = confirmPassword, error = "Confirmar senha deve ser igual a senha")
+            )
+            return
+        }
+
+        formState = formState.copy(
+            confirmPassword = FieldState(field = confirmPassword, error = null)
         )
     }
 

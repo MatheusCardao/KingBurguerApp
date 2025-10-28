@@ -3,9 +3,7 @@ package dev.tiagoaguiar.kingburguer.compose.signup
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,7 +12,6 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -22,7 +19,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -152,11 +148,12 @@ private fun SignUpContentScreen(
                     signUpViewModel.updateName(it)
                 }
                 KingTextField(
-                    value = "",
+                    value = signUpViewModel.formState.password.field,
                     label = R.string.password,
                     placeholder = R.string.hint_password,
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next,
+                    error = signUpViewModel.formState.password.error,
                     ofuscate = passwordHidden,
                     trailingIcon = {
                         IconButton(onClick = { passwordHidden = !passwordHidden }) {
@@ -170,7 +167,7 @@ private fun SignUpContentScreen(
                         }
                     }
                 ) {
-
+                    signUpViewModel.updatePassword(it)
                 }
                 KingTextField(
                     value = "",
