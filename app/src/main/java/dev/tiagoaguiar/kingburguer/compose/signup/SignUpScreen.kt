@@ -129,13 +129,14 @@ private fun SignUpContentScreen(
                 KingTextTitle(text = stringResource(id = R.string.signup))
 
                 KingTextField(
-                    value = "",
+                    value = signUpViewModel.formState.email.field,
                     label = R.string.email,
                     placeholder = R.string.hint_email,
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
+                    error = signUpViewModel.formState.email.error
                 ) {
-
+                    signUpViewModel.updateEmail(it)
                 }
                 KingTextField(
                     value = signUpViewModel.formState.name.field,
@@ -188,7 +189,7 @@ private fun SignUpContentScreen(
                         }
                     }
                 ) {
-
+                    signUpViewModel.updatePasswordConfirm(it)
                 }
                 KingTextField(
                     value = "",

@@ -1,5 +1,6 @@
 package dev.tiagoaguiar.kingburguer.viewmodels
 
+import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -24,6 +25,26 @@ class SignUpViewModel: ViewModel() {
 
     fun reset() {
         _uiState.update { SignUpUiState() }
+    }
+
+    fun updateEmail(newEmail: String) {
+        if(newEmail.isBlank()) {
+            formState = formState.copy(
+                email = FieldState(field = newEmail, error = "Campo e-mail não pode ser vazio")
+            )
+            return
+        }
+
+        if(!isEmailValid(newEmail)) {
+            formState = formState.copy(
+                name = FieldState(field = newEmail, error = "E-mail inválido. Verifique o campo novamente")
+            )
+            return
+        }
+
+        formState = formState.copy(
+            name = FieldState(field = newEmail, error = null)
+        )
     }
 
     fun updateName(newName: String) {
@@ -69,14 +90,14 @@ class SignUpViewModel: ViewModel() {
     fun updatePasswordConfirm(confirmPassword: String) {
         if(confirmPassword.isBlank()) {
             formState = formState.copy(
-                confirmPassword = FieldState(field = confirmPassword, error = "Campo senha não pode ser vazio")
+                confirmPassword = FieldState(field = confirmPassword, error = "Campo confirmar senha não pode ser vazio")
             )
             return
         }
 
         if(confirmPassword != formState.password.field) {
             formState = formState.copy(
-                confirmPassword = FieldState(field = confirmPassword, error = "Confirmar senha deve ser igual a senha")
+                confirmPassword = FieldState(field = confirmPassword, error = "Confirmar confirmar senha deve ser igual a senha")
             )
             return
         }
@@ -96,7 +117,9 @@ class SignUpViewModel: ViewModel() {
 
             // _uiState.update { it.copy(isLoading = false, error = "Usuario nao encontrado!") }
         }
+    }
 
-
+    private fun isEmailValid(email: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
