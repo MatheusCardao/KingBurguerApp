@@ -38,7 +38,7 @@ class SignUpViewModel : ViewModel() {
 
         if (!isEmailValid(newEmail)) {
             formState = formState.copy(
-                name = FieldState(
+                email = FieldState(
                     field = newEmail,
                     error = "E-mail inválido. Verifique o campo novamente"
                 )
@@ -47,7 +47,7 @@ class SignUpViewModel : ViewModel() {
         }
 
         formState = formState.copy(
-            name = FieldState(field = newEmail, error = null)
+            email = FieldState(field = newEmail, error = null)
         )
     }
 
@@ -138,7 +138,7 @@ class SignUpViewModel : ViewModel() {
 
         if(result.length != pattern.length) {
             formState = formState.copy(
-                document = FieldState(field = result, error = "CPF deve ter 3 letras ou mais")
+                document = FieldState(field = result, error = "CPF deve ter 11 números")
             )
             return
         }
