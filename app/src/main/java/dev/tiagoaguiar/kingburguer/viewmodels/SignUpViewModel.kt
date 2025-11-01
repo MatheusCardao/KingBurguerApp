@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dev.tiagoaguiar.kingburguer.compose.signup.FieldState
 import dev.tiagoaguiar.kingburguer.compose.signup.FormState
 import dev.tiagoaguiar.kingburguer.compose.signup.SignUpUiState
+import dev.tiagoaguiar.kingburguer.validation.Mask
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignUpViewModel: ViewModel() {
+class SignUpViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState: StateFlow<SignUpUiState> = _uiState.asStateFlow()
@@ -28,16 +29,19 @@ class SignUpViewModel: ViewModel() {
     }
 
     fun updateEmail(newEmail: String) {
-        if(newEmail.isBlank()) {
+        if (newEmail.isBlank()) {
             formState = formState.copy(
                 email = FieldState(field = newEmail, error = "Campo e-mail não pode ser vazio")
             )
             return
         }
 
-        if(!isEmailValid(newEmail)) {
+        if (!isEmailValid(newEmail)) {
             formState = formState.copy(
-                name = FieldState(field = newEmail, error = "E-mail inválido. Verifique o campo novamente")
+                name = FieldState(
+                    field = newEmail,
+                    error = "E-mail inválido. Verifique o campo novamente"
+                )
             )
             return
         }
@@ -48,14 +52,14 @@ class SignUpViewModel: ViewModel() {
     }
 
     fun updateName(newName: String) {
-        if(newName.isBlank()) {
+        if (newName.isBlank()) {
             formState = formState.copy(
                 name = FieldState(field = newName, error = "Campo nome não pode ser vazio")
             )
             return
         }
 
-        if(newName.length < 3) {
+        if (newName.length < 3) {
             formState = formState.copy(
                 name = FieldState(field = newName, error = "Nome deve ter 3 letras ou mais")
             )
@@ -68,16 +72,19 @@ class SignUpViewModel: ViewModel() {
     }
 
     fun updatePassword(newPassword: String) {
-        if(newPassword.isBlank()) {
+        if (newPassword.isBlank()) {
             formState = formState.copy(
                 password = FieldState(field = newPassword, error = "Campo senha não pode ser vazio")
             )
             return
         }
 
-        if(newPassword.length < 8) {
+        if (newPassword.length < 8) {
             formState = formState.copy(
-                password = FieldState(field = newPassword, error = "Senha deve ter 8 caracteres ou mais")
+                password = FieldState(
+                    field = newPassword,
+                    error = "Senha deve ter 8 caracteres ou mais"
+                )
             )
             return
         }
@@ -88,22 +95,56 @@ class SignUpViewModel: ViewModel() {
     }
 
     fun updatePasswordConfirm(confirmPassword: String) {
-        if(confirmPassword.isBlank()) {
+        if (confirmPassword.isBlank()) {
             formState = formState.copy(
-                confirmPassword = FieldState(field = confirmPassword, error = "Campo confirmar senha não pode ser vazio")
+                confirmPassword = FieldState(
+                    field = confirmPassword,
+                    error = "Campo confirmar senha não pode ser vazio"
+                )
             )
             return
         }
 
-        if(confirmPassword != formState.password.field) {
+        if (confirmPassword != formState.password.field) {
             formState = formState.copy(
-                confirmPassword = FieldState(field = confirmPassword, error = "Confirmar confirmar senha deve ser igual a senha")
+                confirmPassword = FieldState(
+                    field = confirmPassword,
+                    error = "Confirmar confirmar senha deve ser igual a senha"
+                )
             )
             return
         }
 
         formState = formState.copy(
             confirmPassword = FieldState(field = confirmPassword, error = null)
+        )
+    }
+
+    fun updateDocument(newDocument: String) {
+        val pattern = "###.###.###-##"
+        val currentDocument = formState.document.field
+        val result = Mask(pattern, currentDocument, newDocument)
+
+        formState = formState.copy(
+            document = FieldState(field = result, error = null)
+        )
+
+        if(result.isBlank()) {
+            formState = formState.copy(
+                document = FieldState(field = result, error = "Campo CPF não pode ser vazio")
+            )
+            return
+        }
+
+        if(result.length != pattern.length) {
+            formState = formState.copy(
+                document = FieldState(field = result, error = "CPF deve ter 3 letras ou mais")
+            )
+            return
+        }
+
+        formState = formState.copy(
+            document = FieldState(field = result, error = null)
         )
     }
 

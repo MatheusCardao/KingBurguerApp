@@ -32,8 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -192,13 +194,17 @@ private fun SignUpContentScreen(
                     signUpViewModel.updatePasswordConfirm(it)
                 }
                 KingTextField(
-                    value = "",
+                    value = TextFieldValue(
+                        text =  signUpViewModel.formState.document.field,
+                        selection = TextRange(signUpViewModel.formState.document.field.length),
+                    ),
                     label = R.string.document,
                     placeholder = R.string.hint_document,
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
+                    error = signUpViewModel.formState.document.error
                 ) {
-
+                    signUpViewModel.updateDocument(it.text)
                 }
                 KingTextField(
                     value = "",

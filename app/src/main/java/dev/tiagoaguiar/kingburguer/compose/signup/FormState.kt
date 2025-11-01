@@ -9,5 +9,6 @@ data class FormState(
     val email: FieldState = FieldState(),
     val name: FieldState = FieldState(),
     val password: FieldState = FieldState(),
-    val confirmPassword: FieldState = FieldState()
+    val confirmPassword: FieldState = FieldState(),
+    val document: FieldState = FieldState()
 )
