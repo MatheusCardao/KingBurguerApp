@@ -3,7 +3,6 @@ package dev.tiagoaguiar.kingburguer.validation
 fun Mask(pattern: String, currentValue: String, newValue: String): String {
     val str = newValue.filter { it.isLetterOrDigit() }
 
-
     var result = ""
     var i = 0
     for (char in pattern) {

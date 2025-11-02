@@ -46,6 +46,7 @@ import dev.tiagoaguiar.kingburguer.compose.component.KingTextField
 import dev.tiagoaguiar.kingburguer.compose.component.KingTextTitle
 import dev.tiagoaguiar.kingburguer.ui.theme.KingBurguerTheme
 import dev.tiagoaguiar.kingburguer.viewmodels.SignUpViewModel
+import kotlin.math.sign
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,7 +64,10 @@ fun SignUpScreen(
                     title = { Text(stringResource(id = R.string.login)) },
                     navigationIcon = {
                         IconButton(onClick = { onNavigationClick }) {
-                            Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = stringResource(id = R.string.back) )
+                            Icon(
+                                imageVector = Icons.Filled.ArrowBack,
+                                contentDescription = stringResource(id = R.string.back)
+                            )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -78,7 +82,7 @@ fun SignUpScreen(
                 signUpViewModel = signUpViewModel,
                 onNavigationToHome = onNavigationToHome,
                 modifier = Modifier
-                .padding(top = contentPadding.calculateTopPadding())
+                    .padding(top = contentPadding.calculateTopPadding())
             )
         }
     }
@@ -110,7 +114,7 @@ private fun SignUpContentScreen(
             ) {
 
                 LaunchedEffect(key1 = uiState.goToHome) {
-                    if(uiState.goToHome) {
+                    if (uiState.goToHome) {
                         onNavigationToHome()
                         signUpViewModel.reset()
                     }
@@ -195,7 +199,7 @@ private fun SignUpContentScreen(
                 }
                 KingTextField(
                     value = TextFieldValue(
-                        text =  signUpViewModel.formState.document.field,
+                        text = signUpViewModel.formState.document.field,
                         selection = TextRange(signUpViewModel.formState.document.field.length),
                     ),
                     label = R.string.document,
@@ -207,13 +211,17 @@ private fun SignUpContentScreen(
                     signUpViewModel.updateDocument(it.text)
                 }
                 KingTextField(
-                    value = "",
+                    value = TextFieldValue(
+                        text = signUpViewModel.formState.birthday.field,
+                        selection = TextRange(signUpViewModel.formState.birthday.field.length),
+                    ),
                     label = R.string.birthdate,
                     placeholder = R.string.hint_birthdate,
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done,
+                    error = signUpViewModel.formState.birthday.error
                 ) {
-
+                    signUpViewModel.updateBirthday(it.text)
                 }
                 KingButton(
                     text = stringResource(id = R.string.sign_up),
