@@ -140,7 +140,7 @@ private fun SignUpContentScreen(
                     placeholder = R.string.hint_email,
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next,
-                    error = signUpViewModel.formState.email.error
+                    error = signUpViewModel.formState.email.error?.value
                 ) {
                     signUpViewModel.updateEmail(it)
                 }
@@ -150,7 +150,7 @@ private fun SignUpContentScreen(
                     placeholder = R.string.hint_name,
                     keyboardType = KeyboardType.Text,
                     imeAction = ImeAction.Done,
-                    error = signUpViewModel.formState.name.error
+                    error = signUpViewModel.formState.name.error?.value
                 ) {
                     signUpViewModel.updateName(it)
                 }
@@ -160,7 +160,7 @@ private fun SignUpContentScreen(
                     placeholder = R.string.hint_password,
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Next,
-                    error = signUpViewModel.formState.password.error,
+                    error = signUpViewModel.formState.password.error?.value,
                     ofuscate = passwordHidden,
                     trailingIcon = {
                         IconButton(onClick = { passwordHidden = !passwordHidden }) {
@@ -206,7 +206,7 @@ private fun SignUpContentScreen(
                     placeholder = R.string.hint_document,
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Next,
-                    error = signUpViewModel.formState.document.error
+                    error = signUpViewModel.formState.document.error?.value
                 ) {
                     signUpViewModel.updateDocument(it.text)
                 }
@@ -219,7 +219,7 @@ private fun SignUpContentScreen(
                     placeholder = R.string.hint_birthdate,
                     keyboardType = KeyboardType.Number,
                     imeAction = ImeAction.Done,
-                    error = signUpViewModel.formState.birthday.error
+                    error = signUpViewModel.formState.birthday.error?.value
                 ) {
                     signUpViewModel.updateBirthday(it.text)
                 }

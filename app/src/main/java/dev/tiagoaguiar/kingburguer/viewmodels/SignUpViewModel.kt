@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import dev.tiagoaguiar.kingburguer.compose.signup.FieldState
 import dev.tiagoaguiar.kingburguer.compose.signup.FormState
 import dev.tiagoaguiar.kingburguer.compose.signup.SignUpUiState
+import dev.tiagoaguiar.kingburguer.validation.EmailValidator
 import dev.tiagoaguiar.kingburguer.validation.Mask
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,30 +29,16 @@ class SignUpViewModel : ViewModel() {
 
     var formState by mutableStateOf(FormState())
 
+    private val emailValidator = EmailValidator()
+
     fun reset() {
         _uiState.update { SignUpUiState() }
     }
 
     fun updateEmail(newEmail: String) {
-        if (newEmail.isBlank()) {
-            formState = formState.copy(
-                email = FieldState(field = newEmail, error = "Campo e-mail não pode ser vazio")
-            )
-            return
-        }
-
-        if (!isEmailValid(newEmail)) {
-            formState = formState.copy(
-                email = FieldState(
-                    field = newEmail,
-                    error = "E-mail inválido. Verifique o campo novamente"
-                )
-            )
-            return
-        }
-
+        val textString = emailValidator.validate(newEmail)
         formState = formState.copy(
-            email = FieldState(field = newEmail, error = null)
+            email = FieldState(field = newEmail, error = textString)
         )
     }
 
